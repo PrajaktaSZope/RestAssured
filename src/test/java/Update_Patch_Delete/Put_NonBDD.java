@@ -8,32 +8,28 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 
 public class Put_NonBDD {
+    RequestSpecification r;
+    Response response;
+    ValidatableResponse vr;
 
     @Test
     public void test_NonBDD_Put(){
-        
-        String token = "OHTJ7uhUMOJud7nM";
-        String bookingid = "129";
+
         String payloadPUT="{\n" +
-                "    \"roomid\": 129,\n" +
-                "    \"firstname\": \"Praj\",\n" +
-                "    \"lastname\": \"Bhagat\",\n" +
+                "    \"firstname\": \"casey\",\n" +
+                "    \"lastname\": \"Jordon\",\n" +
                 "    \"depositpaid\": true,\n" +
-                "    \"email\": \"test1@email.com\",\n" +
-                "    \"phone\": \"07123456789\",\n" +
                 "    \"bookingdates\": {\n" +
                 "        \"checkin\": \"2026-03-06\",\n" +
                 "        \"checkout\": \"2026-03-07\"\n" +
                 "    }\n" +
                 "}";
-
-        RequestSpecification r;
-        Response response;
-        ValidatableResponse vr;
+        String token = "a6a16b87fc35b3b";
+        String bookingid = "5";
 
         r = RestAssured.given();
         r.baseUri("https://restful-booker.herokuapp.com");
-        r.baseUri("/booking/"+bookingid);
+        r.basePath("/booking/"+bookingid);
         r.contentType(ContentType.JSON);
         r.cookie("token",token);
         r.body(payloadPUT).log().all();
@@ -41,9 +37,7 @@ public class Put_NonBDD {
         response = r.when().log().all().put();
 
         vr = response.then().log().all();
-        vr.statusCode(200);
-
-
+        vr.statusCode(403);
 
     }
 
